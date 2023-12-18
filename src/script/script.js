@@ -83,13 +83,19 @@ officeHours.forEach((hourObj) => {
 
   // Takes an array of schedules and saves them in localStorage.
   //schedule = {time, task}
-  function saveSchedulesToStorage(schedules) {
+  function saveSchedulesToStorage(schedules, toSaveOrRemove = 'save') {
     localStorage.setItem('schedules', JSON.stringify(schedules));
     
     //scrolls to the top of the page, so that save successful message is visible
     $(window).scrollTop(0);
-    // displaying the save successful message on top of the time blocks
-    saveMessageEl.html('Appontment Added to <span>localstorage </span><i class="fa-solid fa-check fa-beat fa-xl"></i>');
+    if(toSaveOrRemove == 'save'){
+      // displaying the save successful message on top of the time blocks
+      saveMessageEl.html('Appontment added to <span>localstorage </span><i class="fa-solid fa-check fa-beat fa-xl"></i>');
+    }else{
+      // displaying the delete successful message on top of the time blocks
+    saveMessageEl.html('Appontment removed from <span>localstorage </span><i class="fa-solid fa-check fa-beat fa-xl"></i>');
+    }
+    
     setTimeout(() => saveMessageEl.empty(), 3000);
   }
   // Reads projects from local storage and returns array of schedule objects.
@@ -162,7 +168,7 @@ officeHours.forEach((hourObj) => {
         //a new schedules without the previously stored schedule
         schedules = schedules.filter(schedule => schedule !== theExistingSchedule);
         //save all the schedules to storage
-        saveSchedulesToStorage(schedules);
+        saveSchedulesToStorage(schedules,'remove');
       }else{//when user typed in empty string in an previously empty schedule
         //schedule element textarea may have whitespaces, 
         //so making it empty, so placehoder can be displayed as an error message
