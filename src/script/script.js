@@ -62,7 +62,7 @@ function handleEnter(theEvent) {
 const officeHours = Array.from(new Array(9)).map((item, index) => {
   //dayjs().hour(index + 6) equals to  Mon, 18 Dec 2023 03:02:10 GMT
   //office hours are 9AM to 5PM
-  const hour = dayjs().hour(index + 15).format('H');//like 9, 14
+  const hour = dayjs().hour(index + 9).format('H');//like 9, 14
   const hourText = dayjs().hour(index + 9).format('hA');// like 9AM, 2PM
   return { hour, hourText };
 });

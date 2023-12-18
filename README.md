@@ -28,7 +28,7 @@ This application was created as a coding challenge assignment while doing a codi
     THEN the saved events persist
 ## Demo
 The following animation demonstrations the application's functionlity:
-![image](./Assets/image/third-party-apis-homework-demo.gif)
+![image](./Assets/image/demo.gif)
 
 ## Features of the application
 -  _JQuery_ for dom manipulation
