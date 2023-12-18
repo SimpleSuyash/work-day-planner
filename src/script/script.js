@@ -39,6 +39,13 @@ function addAttrReadonly(hour) {
   }
 }
 
+function addClassUnHover(hour){
+  if (hour < currentHour) {
+    return 'unHover';
+  } else {
+    return '';
+  }
+}
 
 //disabling the enter in the schedule textarea
 //since only one event can be saved for any given hour
@@ -55,7 +62,7 @@ function handleEnter(theEvent) {
 const officeHours = Array.from(new Array(9)).map((item, index) => {
   //dayjs().hour(index + 6) equals to  Mon, 18 Dec 2023 03:02:10 GMT
   //office hours are 9AM to 5PM
-  const hour = dayjs().hour(index + 9).format('H');//like 9, 14
+  const hour = dayjs().hour(index + 15).format('H');//like 9, 14
   const hourText = dayjs().hour(index + 9).format('hA');// like 9AM, 2PM
   return { hour, hourText };
 });
@@ -70,7 +77,7 @@ officeHours.forEach((hourObj) => {
   const taskColumnEl = $(`<textarea class ='col-8 col-md-10 description' rows = '3' 
     data-hour ='${hourObj.hourText}' ${addAttrReadonly(hourObj.hour)}> ${getSchedule()} </textarea>`);//hourObj
   //save column
-  const saveEl = $(`<button class = 'btn saveBtn col-2 col-md-1' aria-label = 'save' 
+  const saveEl = $(`<button class = 'btn saveBtn col-2 col-md-1 ${addClassUnHover(hourObj.hour)}' aria-label = 'save' 
   ${addAttrDisabled(hourObj.hour)}><i class ='fas fa-save' aria-hidden='true'></i></button>`);
 
   //appending the elements to the container
