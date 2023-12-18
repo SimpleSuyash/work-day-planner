@@ -78,18 +78,7 @@ officeHours.forEach((hourObj) => {
   containerEl.append(scheduleBlockEl);
 
 
-  function getSchedule() {
-    let event = "";;
-    const schedules = readSchedulesFromStorage();
-    //going thru each items in the given schedules array
-    schedules.forEach((schedule) => {
-      //alert(`${hourObj.hourText}, ${schedule.time}`) ;                                                             
-      if (hourObj.hourText == schedule.time) {
-        event = schedule.task;
-      }
-    });
-    return event;
-  }
+
 
 
   // Takes an array of schedules and saves them in localStorage.
@@ -116,47 +105,73 @@ officeHours.forEach((hourObj) => {
     return schedules;
   }
 
-
+  function getSchedule() {
+    let event = "";;
+    const schedules = readSchedulesFromStorage();
+    //going thru each items in the given schedules array
+    schedules.forEach((schedule) => {
+      //alert(`${hourObj.hourText}, ${schedule.time}`) ;                                                             
+      if (hourObj.hourText == schedule.time) {
+        event = schedule.task;
+      }
+    });
+    return event;
+  }
   //defining the click event on save button
   function handleSave() {
-    const schedules = readSchedulesFromStorage();
+    let schedules = readSchedulesFromStorage();
     const task = taskColumnEl.val().trim();
     const time = taskColumnEl.attr('data-hour');
     //to track if for any given hour, the schedule already exist in the storage
     let scheduleExistAlready = false;
-    if (task) {
-      //if user type in some event, make scheduledTask object
-      const scheduledTask = {
-        'time': time,
-        'task': task
-      };
+    if (task) {//when user typed something as a schedule
       //for all the schedules in the storage
       //if time in the storage matches to the schedule element time
       //change the schedule in the storage with that of the schedule element
       schedules.forEach((schedule) => {
-        if (schedule.time == scheduledTask.time) {
+        if (schedule.time == time) {
           //when a schedule already exist for the hour
           // just update the new schedule
-          schedule.task = scheduledTask.task;
+          schedule.task = task;
           scheduleExistAlready = true;
         }
       });
       if (!scheduleExistAlready) {
         //if no schedules found in the storage for the given hours
         //add the schedule
-        schedules.push(scheduledTask);
+        schedules.push({time, task});
       }
       //save all the schedules to storage
       saveSchedulesToStorage(schedules);
       //when the schedule element's value is empty 
       //or when there is no schedule but user pressed save button
-    } else {
-      //schedule element textarea may have whitespaces, 
-      //so making it empty, so placehoder can be displayed as an error message
-      taskColumnEl.val('');
-      taskColumnEl.attr('placeholder', '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Your task is empty. The Schedule could not be saved. ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
-      setTimeout(() => taskColumnEl.attr('placeholder', ''), 3000);
+    } else { //when user typed empty string as schedule
+      let theExistingSchedule;
+      //this serves as the delete function
+      //if there was a task scheduled before 
+      //and now user is replacing with empty string
+      schedules.forEach((schedule) => {
+        if (schedule.time == time) {
+          //finding the existing schedule
+          theExistingSchedule = schedule;
+          scheduleExistAlready=true;
+        }
+      });
+      if(scheduleExistAlready){//when user wants to replace existing schedule with empty string
+        //deleting the existing schedule and creating 
+        //a new schedules without the previously stored schedule
+        schedules = schedules.filter(schedule => schedule !== theExistingSchedule);
+        //save all the schedules to storage
+        saveSchedulesToStorage(schedules);
+      }else{//when user typed in empty string in an previously empty schedule
+        //schedule element textarea may have whitespaces, 
+        //so making it empty, so placehoder can be displayed as an error message
+        taskColumnEl.val('');
+        taskColumnEl.attr('placeholder', '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Your task is empty. The Schedule could not be saved. ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
+        setTimeout(() => taskColumnEl.attr('placeholder', ''), 3000);
+      }
     }
+    taskColumnEl.val(getSchedule());
   };
 
   //attaching the events
