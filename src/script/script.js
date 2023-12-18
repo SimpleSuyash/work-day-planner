@@ -39,7 +39,7 @@ function addAttrReadonly(hour) {
   }
 }
 
-function addClassUnHover(hour){
+function addClassUnHover(hour) {
   if (hour < currentHour) {
     return 'unHover';
   } else {
@@ -74,35 +74,30 @@ officeHours.forEach((hourObj) => {
   // time column
   const timeColumnEl = $(`<div class = 'col-2 col-md-1 hour text-center py-3'>${hourObj.hourText}</div>`);
   //task column
-  const taskColumnEl = $(`<textarea class ='col-8 col-md-10 description' rows = '3' 
-    data-hour ='${hourObj.hourText}' ${addAttrReadonly(hourObj.hour)}> ${getSchedule()} </textarea>`);//hourObj
+  const taskColumnEl = $(`<textarea class ='col-8 col-md-10 description' rows = '3' data-hour ='${hourObj.hourText}' ${addAttrReadonly(hourObj.hour)} name = 'schedule'>${getSchedule()}</textarea>`);//hourObj
   //save column
-  const saveEl = $(`<button class = 'btn saveBtn col-2 col-md-1 ${addClassUnHover(hourObj.hour)}' aria-label = 'save' 
-  ${addAttrDisabled(hourObj.hour)}><i class ='fas fa-save' aria-hidden='true'></i></button>`);
+  const saveEl = $(`<button class = 'btn saveBtn col-2 col-md-1 ${addClassUnHover(hourObj.hour)}' aria-label = 'save' ${addAttrDisabled(hourObj.hour)}><i class ='fas fa-save' aria-hidden='true'></i></button>`);
 
   //appending the elements to the container
   scheduleBlockEl.append(timeColumnEl, taskColumnEl, saveEl);
   containerEl.append(scheduleBlockEl);
 
 
-
-
-
   // Takes an array of schedules and saves them in localStorage.
   //schedule = {time, task}
   function saveSchedulesToStorage(schedules, toSaveOrRemove = 'save') {
     localStorage.setItem('schedules', JSON.stringify(schedules));
-    
+
     //scrolls to the top of the page, so that save successful message is visible
     $(window).scrollTop(0);
-    if(toSaveOrRemove == 'save'){
+    if (toSaveOrRemove == 'save') {
       // displaying the save successful message on top of the time blocks
       saveMessageEl.html('The schedule is saved to the <span>localstorage </span><i class="fa-solid fa-check fa-beat fa-xl"></i>');
-    }else{
+    } else {
       // displaying the delete successful message on top of the time blocks
-    saveMessageEl.html('The schedule is removed from the <span>localstorage </span><i class="fa-solid fa-check fa-beat fa-xl"></i>');
+      saveMessageEl.html('The schedule is removed from the <span>localstorage </span><i class="fa-solid fa-check fa-beat fa-xl"></i>');
     }
-    
+
     setTimeout(() => saveMessageEl.empty(), 3000);
   }
   // Reads projects from local storage and returns array of schedule objects.
@@ -152,7 +147,7 @@ officeHours.forEach((hourObj) => {
       if (!scheduleExistAlready) {
         //if no schedules found in the storage for the given hours
         //add the schedule
-        schedules.push({time, task});
+        schedules.push({ time, task });
       }
       //save all the schedules to storage
       saveSchedulesToStorage(schedules);
@@ -167,16 +162,16 @@ officeHours.forEach((hourObj) => {
         if (schedule.time == time) {
           //finding the existing schedule
           theExistingSchedule = schedule;
-          scheduleExistAlready=true;
+          scheduleExistAlready = true;
         }
       });
-      if(scheduleExistAlready){//when user wants to replace existing schedule with empty string
+      if (scheduleExistAlready) {//when user wants to replace existing schedule with empty string
         //deleting the existing schedule and creating 
         //a new schedules without the previously stored schedule
         schedules = schedules.filter(schedule => schedule !== theExistingSchedule);
         //save all the schedules to storage
-        saveSchedulesToStorage(schedules,'remove');
-      }else{//when user typed in empty string in an previously empty schedule
+        saveSchedulesToStorage(schedules, 'remove');
+      } else {//when user typed in empty string in an previously empty schedule
         //schedule element textarea may have whitespaces, 
         //so making it empty, so placehoder can be displayed as an error message
         taskColumnEl.val('');
