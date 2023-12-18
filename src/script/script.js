@@ -90,10 +90,10 @@ officeHours.forEach((hourObj) => {
     $(window).scrollTop(0);
     if(toSaveOrRemove == 'save'){
       // displaying the save successful message on top of the time blocks
-      saveMessageEl.html('Appontment added to <span>localstorage </span><i class="fa-solid fa-check fa-beat fa-xl"></i>');
+      saveMessageEl.html('The schedule is saved to the <span>localstorage </span><i class="fa-solid fa-check fa-beat fa-xl"></i>');
     }else{
       // displaying the delete successful message on top of the time blocks
-    saveMessageEl.html('Appontment removed from <span>localstorage </span><i class="fa-solid fa-check fa-beat fa-xl"></i>');
+    saveMessageEl.html('The schedule is removed from the <span>localstorage </span><i class="fa-solid fa-check fa-beat fa-xl"></i>');
     }
     
     setTimeout(() => saveMessageEl.empty(), 3000);
