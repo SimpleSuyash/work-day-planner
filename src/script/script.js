@@ -39,6 +39,8 @@ function addAttrReadonly(hour) {
   }
 }
 
+//outputs the 'unhover' text as a class name
+// it removes the hovering effect 
 function addClassUnHover(hour) {
   if (hour < currentHour) {
     return 'unHover';
