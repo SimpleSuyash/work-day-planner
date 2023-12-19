@@ -100,7 +100,7 @@ officeHours.forEach((hourObj) => {
 
     setTimeout(() => saveMessageEl.empty(), 3000);
   }
-  // Reads projects from local storage and returns array of schedule objects.
+  // Reads schedules from local storage and returns array of schedule objects.
   // Returns an empty array ([]) if there aren't any schedules.
   function readSchedulesFromStorage() {
     let schedules = localStorage.getItem('schedules');
