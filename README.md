@@ -45,8 +45,7 @@ The application uses the starter code from the following link:
 
 
 ## Caution
-Day.js is a lightweight alternative to Moment with almost the same functionality. But to use date ordinal (31st, 17th, etc), the AdvancedFormat plugin is required to be downloaded to the application package like below:
-![image](./Assets/image/advanced-format-plugin.png)
+Day.js is a lightweight alternative to Moment with almost the same functionality. But to use date ordinal (31st, 17th, etc), the AdvancedFormat plugin is required, so make sure to include the cdn link in the script tag.
 
 ## Link to the deployed application
 [Link to deployed Work Day Planner application](https://simplesuyash.github.io/work-day-planner/)
