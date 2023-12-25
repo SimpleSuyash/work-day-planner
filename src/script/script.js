@@ -108,7 +108,7 @@ officeHours.forEach((hourObj) => {
     let schedules = localStorage.getItem('schedules');
     if (schedules) {
       //if schedules array is not null
-      schedules = JSON.parse(localStorage.getItem("schedules"));
+      schedules = JSON.parse(schedules);
     } else {
       schedules = [];
     }
